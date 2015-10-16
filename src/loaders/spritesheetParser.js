@@ -21,8 +21,15 @@ module.exports = function ()
 
         var resolution = core.utils.getResolutionOfUrl( resource.url );
 
+        var imagePath = resource.data.meta.image;
+
+        // check for remote image paths, correct them if neccessary
+        if( imagePath.search("http") === -1 ) {
+          imagePath = route + '/' + imagePath;
+        }
+
         // load the image for this sheet
-        this.add(resource.name + '_image', route + '/' + resource.data.meta.image, loadOptions, function (res)
+        this.add(resource.name + '_image', imagePath, loadOptions, function (res)
         {
             resource.textures = {};
 
